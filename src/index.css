@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    @apply bg-neutral-50;
+  }
+
+  body {
+    @apply bg-neutral-50 text-neutral-900 antialiased selection:bg-neutral-900 selection:text-white;
+  }
+}
+
+@layer utilities {
+  .animate-blob {
+    animation: blob 7s infinite;
+  }
+
+  .text-2-5d-neutral {
+    text-shadow:
+      1px 1px 0px #e5e5e5,
+      2px 2px 0px #d4d4d4,
+      3px 3px 0px #a3a3a3;
+  }
+}
+
+@keyframes blob {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
