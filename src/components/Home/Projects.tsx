@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowUpRight, Github, Star } from 'lucide-react';
+import { ArrowUpRight, Star } from 'lucide-react';
 
 interface Repository {
     id: number;
