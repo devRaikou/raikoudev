@@ -39,16 +39,16 @@ const Projects = () => {
 
     if (loading) {
         return (
-            <section id="projects" className="py-32 bg-neutral-50">
+            <section id="projects" className="py-32 bg-neutral-50 dark:bg-neutral-950 transition-colors duration-700">
                 <div className="max-w-6xl mx-auto px-6 text-center">
-                    <p className="text-xl text-neutral-500 animate-pulse">Loading projects...</p>
+                    <p className="text-xl text-neutral-500 dark:text-neutral-400 animate-pulse">Loading projects...</p>
                 </div>
             </section>
         );
     }
 
     return (
-        <section id="projects" className="py-32 bg-neutral-50">
+        <section id="projects" className="py-32 bg-neutral-50 dark:bg-neutral-950 transition-colors duration-700">
             <div className="max-w-6xl mx-auto px-6">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -58,87 +58,95 @@ const Projects = () => {
                     className="mb-20"
                 >
                     <div className="relative inline-block">
-                        <span className="absolute top-1.5 left-1.5 md:top-3 md:left-3 text-6xl md:text-8xl font-bold tracking-tighter text-neutral-200 select-none whitespace-pre-wrap">
-                            Selected <br /> <span className="text-neutral-200">Works.</span>
+                        <span className="absolute top-1.5 left-1.5 md:top-3 md:left-3 text-6xl md:text-8xl font-bold tracking-tighter text-neutral-200 dark:text-neutral-800 select-none whitespace-pre-wrap">
+                            Selected <br /> <span>Works.</span>
                         </span>
-                        <h2 className="relative z-10 text-6xl md:text-8xl font-bold tracking-tighter mb-8 text-neutral-900">
-                            Selected <br /> <span className="text-neutral-400">Works.</span>
+                        <h2 className="relative z-10 text-6xl md:text-8xl font-bold tracking-tighter mb-8 text-neutral-900 dark:text-neutral-50">
+                            Selected <br /> <span className="text-neutral-400 dark:text-neutral-600">Works.</span>
                         </h2>
                     </div>
                 </motion.div>
 
-                <div className="space-y-32">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {repos.map((repo, index) => (
                         <motion.div
                             key={repo.id}
                             initial={{ opacity: 0, y: 40 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{ duration: 0.8, delay: index * 0.1 }}
-                            className="group relative grid md:grid-cols-2 gap-8 items-center"
+                            transition={{ duration: 0.6, delay: index * 0.1 }}
+                            whileHover={{ 
+                                y: -8,
+                                transition: { duration: 0.3 }
+                            }}
+                            className="group relative bg-white dark:bg-neutral-900 rounded-xl overflow-hidden border border-neutral-200 dark:border-neutral-800 hover:border-emerald-500/50 dark:hover:border-emerald-500/50 transition-all duration-300 flex flex-col"
                         >
-                            <div className="relative overflow-hidden rounded-2xl aspect-video shadow-lg border border-neutral-200 bg-neutral-100">
+                            {/* Image Section */}
+                            <div className="relative overflow-hidden aspect-video bg-neutral-100 dark:bg-neutral-800">
                                 <img
                                     src={`https://opengraph.githubassets.com/1/devraikou/${repo.name}`}
                                     alt={repo.name}
-                                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-in-out"
+                                    className="w-full h-full object-cover"
                                 />
-                                <div className="absolute inset-0 bg-neutral-900/0 group-hover:bg-neutral-900/5 transition-colors duration-500" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                             </div>
 
-                            <div className="space-y-6">
-                                <div className="flex items-center gap-3">
+                            {/* Content */}
+                            <div className="p-5 flex flex-col flex-1">
+                                <div className="flex items-center justify-between gap-3 mb-3">
                                     {repo.language && (
-                                        <span className="text-emerald-600 font-medium text-sm tracking-widest uppercase">
+                                        <span className="text-emerald-600 dark:text-emerald-400 font-semibold text-xs tracking-wider uppercase">
                                             {repo.language}
                                         </span>
                                     )}
                                     {repo.stargazers_count > 0 && (
-                                        <span className="flex items-center text-neutral-500 text-sm gap-1">
-                                            <Star size={14} /> {repo.stargazers_count}
+                                        <span className="flex items-center text-neutral-500 dark:text-neutral-400 text-sm gap-1">
+                                            <Star size={14} className="fill-current" /> {repo.stargazers_count}
                                         </span>
                                     )}
                                 </div>
 
-                                <h3 className="text-4xl font-bold group-hover:text-emerald-600 transition-colors capitalize">
+                                <h3 className="text-xl font-bold text-neutral-900 dark:text-neutral-50 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors capitalize line-clamp-1 mb-3">
                                     {repo.name.replace(/-/g, ' ')}
                                 </h3>
 
-                                <p className="text-neutral-600 text-lg leading-relaxed line-clamp-3">
-                                    {repo.description || 'No description available for this repository.'}
+                                <p className="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed line-clamp-2 mb-3">
+                                    {repo.description || 'No description available.'}
                                 </p>
 
                                 {repo.topics && repo.topics.length > 0 && (
-                                    <div className="flex flex-wrap gap-2">
+                                    <div className="flex flex-wrap gap-1.5 mb-3">
                                         {repo.topics.slice(0, 3).map(topic => (
-                                            <span key={topic} className="px-2 py-1 bg-neutral-100 text-neutral-600 text-xs rounded-md">
+                                            <span 
+                                                key={topic} 
+                                                className="px-2 py-0.5 bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 text-xs rounded-md font-medium"
+                                            >
                                                 {topic}
                                             </span>
                                         ))}
                                     </div>
                                 )}
 
-                                <div className="pt-4 flex items-center gap-4">
+                                {/* Action Buttons - Always at bottom */}
+                                <div className="mt-auto pt-3 flex gap-3">
+                                    <a
+                                        href={repo.html_url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="flex-1 text-center py-2 px-4 bg-neutral-900 dark:bg-neutral-800 text-white text-sm rounded-lg hover:bg-emerald-600 dark:hover:bg-emerald-600 transition-colors"
+                                    >
+                                        View Code
+                                    </a>
                                     {repo.homepage && (
                                         <a
                                             href={repo.homepage}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="p-3 bg-neutral-900 text-white border border-neutral-900 rounded-full hover:bg-emerald-600 hover:border-emerald-600 transition-colors"
-                                            title="Live Demo"
+                                            className="p-2 bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 rounded-lg hover:bg-emerald-500 hover:text-white transition-all"
                                         >
-                                            <ArrowUpRight size={20} />
+                                            <ArrowUpRight size={18} />
                                         </a>
                                     )}
-                                    <a
-                                        href={repo.html_url}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="p-3 bg-white border border-neutral-200 rounded-full hover:bg-neutral-50 transition-colors text-neutral-900"
-                                        title="View Code"
-                                    >
-                                        <Github size={20} />
-                                    </a>
                                 </div>
                             </div>
                         </motion.div>
